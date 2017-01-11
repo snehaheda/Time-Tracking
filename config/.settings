@@ -1,0 +1,22 @@
+{
+    "projectName": "BlackthornDevTest",
+    "username": "snehaheda@blackthorndevtest.com",
+    "id": "3c106ad0-d73b-11e6-9d61-695aea7fe337",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://blackthorndevtest-sh-dev-ed.my.salesforce.com",
+    "workspace": "C:\\Development\\Workspace\\SFDC",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "ApprovalProcess",
+        "AuraDefinitionBundle",
+        "CustomApplication",
+        "CustomObject",
+        "Profile",
+        "StaticResource"
+    ]
+}

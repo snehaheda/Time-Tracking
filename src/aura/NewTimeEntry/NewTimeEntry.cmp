@@ -1,0 +1,57 @@
+<aura:component controller="TimeTrackerComponentController" >
+
+    <aura:attribute name="project" type="String"  />
+    <aura:attribute name="task" type="String"  /> 
+    <aura:attribute name="notes" type="String"  />
+    <!--declare attributes--> 
+    <aura:attribute name="selectedRecord" type="Task_Assignment__c" default="{}" description="Use,for store SELECTED sObject Record" />
+    <aura:attribute name="listOfSearchRecords" type="Task_Assignment__c[]" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="searchKeyWord" type="string"/>
+    <aura:attribute name="message" type="String" default="Search Result.."/>   
+
+
+    <!--declare events handlers-->  
+    <aura:handler name="selectedTaskEvent" event="c:TaskSelectedEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+    <!-- register events-->
+    <aura:registerEvent name="refreshTaskTimeList" type="c:RefreshTaskTimerList"/>
+
+
+    <div class="slds-form--stacked"  aura:id="newTimeEntry">
+        <div aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+            <label class="slds-form-element__label" for="lookup-348"> Select Task </label>
+           <!--This part is for display search bar for lookup-->  
+            <div class="slds-form-element__control">
+                <div class="slds-input-has-icon slds-input-has-icon--right">
+
+                    <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                        <span class="slds-pill">
+                            <span class="slds-pill__label"> {!v.selectedRecord.btdevtestsh__Task__r.Name}</span>
+                            <button class="slds-button slds-button--icon slds-pill__remove" onclick="{!c.clear}">
+                                <lightning:icon iconName="utility:close" size="small" alternativeText="close"/> 
+                            </button>
+                        </span>
+                    </div>
+                    <ui:inputText aura:id="lookupField" updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input slds-show" value="{!v.searchKeyWord}" placeholder="Task.."/>
+                </div>
+            </div>
+            <!--This part is for Display typehead lookup result List-->  
+            <div class="slds-lookup__menu slds" id="lookup-348">
+                <div class="slds-lookup__item--label slds-text-body--small">{!v.Message}</div>
+                <center> <ui:spinner aura:id="spinner"/> </center>
+                <ul class="slds-lookup__list" role="listbox">
+                    <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                        <c:LookupResult taskRecord="{!singleRec}" />
+                    </aura:iteration>
+                </ul>
+            </div>
+        </div>
+    </div>     
+
+    <div class="slds-form-element slds-p-top--large">
+        <button type="button" class="slds-button slds-button--brand" onclick="{!c.createRecord}">Create</button>
+    </div>
+
+</aura:component>

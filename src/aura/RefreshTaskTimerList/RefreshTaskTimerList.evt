@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Event template" />
+
+<!-- custom event fired to refresh the task list -->

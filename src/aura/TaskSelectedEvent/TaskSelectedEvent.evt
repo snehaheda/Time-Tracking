@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="by this event we are pass the selected task assignment in the parent component">
+    <aura:attribute name="taskSelected" type="Task_Assignment__c"/>
+
+	<!--
+		Custom event which is fired when a task is selected from the lookup dropdown
+	-->
+</aura:event>

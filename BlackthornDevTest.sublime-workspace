@@ -1,0 +1,1080 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"e",
+				"error"
+			],
+			[
+				"sho",
+				"showInfo"
+			],
+			[
+				"cer",
+				"cernerDataService"
+			],
+			[
+				"al",
+				"allergyData"
+			],
+			[
+				"a",
+				"allergyData"
+			],
+			[
+				"coun",
+				"county"
+			],
+			[
+				"c",
+				"county"
+			],
+			[
+				"geo",
+				"geoid"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"inser",
+				"insertGeoScope"
+			],
+			[
+				"org",
+				"orgCreated"
+			],
+			[
+				"ins",
+				"insertDemographicScope"
+			],
+			[
+				"sta",
+				"states"
+			],
+			[
+				"se",
+				"selected"
+			],
+			[
+				"an",
+				"angular"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"sat",
+				"states"
+			],
+			[
+				"save",
+				"saveOrg"
+			],
+			[
+				"count",
+				"county"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"res",
+				"resolve"
+			],
+			[
+				"de",
+				"defer"
+			],
+			[
+				"CON",
+				"console"
+			],
+			[
+				"loca",
+				"localStorage"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"bas",
+				"base_url"
+			],
+			[
+				"token",
+				"token_url"
+			],
+			[
+				"ref",
+				"refresh_token"
+			],
+			[
+				"pa",
+				"patient"
+			],
+			[
+				"acc",
+				"access_token"
+			],
+			[
+				"auth",
+				"auth_url"
+			],
+			[
+				"local",
+				"localhost"
+			],
+			[
+				"Update",
+				"UpdateScore_Field_API_Name__c"
+			],
+			[
+				"S",
+				"String\t[Standard Apex Class]"
+			],
+			[
+				"is",
+				"PUBLIC isBlank(String str) \tBoolean"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"iss",
+				"issues"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"col",
+				"color"
+			],
+			[
+				"tw",
+				"twittertimeline"
+			],
+			[
+				"twitt",
+				"twitter"
+			],
+			[
+				"text",
+				"textarea\tTag"
+			],
+			[
+				"emai",
+				"email_address"
+			],
+			[
+				"mem",
+				"members"
+			],
+			[
+				"ac",
+				"activeSosytee"
+			],
+			[
+				"roo",
+				"rootScope"
+			],
+			[
+				"member",
+				"members"
+			],
+			[
+				"op",
+				"option\tTag"
+			],
+			[
+				"get",
+				"getIssues"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"moi",
+				"moistData"
+			],
+			[
+				"du",
+				"durationData"
+			],
+			[
+				"te",
+				"tempData"
+			],
+			[
+				"moist",
+				"moistData"
+			],
+			[
+				"Temp",
+				"temperature"
+			],
+			[
+				"ba",
+				"batchNum"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<aura:component controller=\"TimeTrackerComponentController\" implements=\"force:appHostable\" >\n\t\n    <!-- Handle component initialization in a client-side controller -->\n    <aura:handler name=\"init\" value=\"{!this}\" action=\"{!c.doInit}\"/>\n\n    <!-- Dynamically load the list of contacts -->\n    <aura:attribute name=\"tasks\" type=\"Time_Entry__c[]\" />\n\t<aura:attribute name=\"messages\" type=\"Aura.Component[]\" access=\"GLOBAL\"/>\n    \n    \n\n    <aura:handler event=\"aura:waiting\" action=\"{!c.showSpinner}\"/>\n    <aura:handler event=\"aura:doneWaiting\" action=\"{!c.hideSpinner}\"/>\n    <aura:handler name=\"refreshTaskTimeList\" event=\"c:RefreshTaskTimerList\"  action=\"{!c.doInit}\"/>\n    \n    <!-- here we will display the current time entry record if any-->\n\t<div class=\"slds-grid slds-wrap slds-p-around--medium\">\n \t \t \n             <div class=\" slds-size--3-of-4\">\n             \t<h1 class=\"slds-text-heading--medium slds-truncate\" title=\"Timesheet\">Today Timesheet</h1>\n             </div>\n             <div class=\" slds-size--1-of-4\">\n                 <div class=\"slds-float--right\">\n                    <ui:button label=\"New\"  press=\"{!c.createRecord}\"/>\n                </div>\n             </div>\n       \n       \n        <div class=\" slds-size--1-of-1\" aura:id=\"messages\">\n            {!v.messages}\n        </div>\n        \n        <div class=\" slds-size--1-of-1\"  aura:id=\"listview\">\n         \t<!-- here  display the task list to start & stop the timer -->\n            <!-- Iterate over the list of tasks and display them -->\n             <aura:if isTrue=\"{!v.tasks.length > 0}\">\n                <aura:iteration var=\"t\" items=\"{!v.tasks}\">\n                    <c:TaskListItem task=\"{!t}\" /> \t\n                </aura:iteration> \n                <aura:set attribute=\"else\">\n                  No Entry found for today\n                </aura:set>\n             </aura:if> \n               \t   \n     \t</div>\n        <center>\n   \t\t\t<ui:spinner aura:id=\"spinner\"/>\n   \t\t</center>\n        \n        <div class=\"slds-p-horizontal--small slds-size--1-of-1\" aura:id=\"newEntry\" >\n            <c:NewTimeEntry />\t\n\t\t</div>\n    </div>\n    \n    \n    \n   \n    \n</aura:component>",
+			"file": "src/aura/TimeTracker/TimeTracker.cmp",
+			"file_size": 2143,
+			"file_write_time": 131285296169252617,
+			"settings":
+			{
+				"buffer_size": 2152,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TimeTracker/TimeTrackerHelper.js",
+			"settings":
+			{
+				"buffer_size": 1222,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TimeTracker/TimeTrackerController.js",
+			"settings":
+			{
+				"buffer_size": 1381,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TaskSelectedEvent/TaskSelectedEvent.evt",
+			"settings":
+			{
+				"buffer_size": 295,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TaskListItem/TaskListItem.cmp",
+			"settings":
+			{
+				"buffer_size": 1703,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TaskListItem/TaskListItemController.js",
+			"settings":
+			{
+				"buffer_size": 519,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/TaskListItem/TaskListItemHelper.js",
+			"settings":
+			{
+				"buffer_size": 2262,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/RefreshTaskTimerList/RefreshTaskTimerList.evt",
+			"settings":
+			{
+				"buffer_size": 114,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/aura/NewTimeEntry/NewTimeEntry.cmp",
+			"settings":
+			{
+				"buffer_size": 3168,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/NewTimeEntry/NewTimeEntryController.js",
+			"settings":
+			{
+				"buffer_size": 2945,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/NewTimeEntry/NewTimeEntryHelper.js",
+			"settings":
+			{
+				"buffer_size": 2104,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/aura/LookupResult/LookupResultController.js",
+			"settings":
+			{
+				"buffer_size": 436,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: i",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 432.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			" Install Package",
+			"Package Control: Install Package",
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Development/Workspace/SFDC/BlackthornDevTest",
+		"/C/Development/Workspace/SFDC/BlackthornDevTest/src"
+	],
+	"file_history":
+	[
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/fhirdata.service.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/epicdata.service.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/cernerdata.service.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/cerner-home.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/epic/epic-menu.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/popover.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/cerner-menu.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/cernerauth.service.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/home/home.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/app.run.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/epicauth.service.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/app.config.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/home.controller.js",
+		"/C/Development/TopCoder/IBP-Mobile Hybrid buildpack project/IBP-IonicEmailChall/Topcoder-StarterPack_Ionic-dev/Topcoder-StarterPack_Ionic-dev/src/components/database/create.js",
+		"/C/Development/TopCoder/IBP-Mobile Hybrid buildpack project/IBP-IonicEmailChall/Topcoder-StarterPack_Ionic-dev/Topcoder-StarterPack_Ionic-dev/src/js/app.js",
+		"/C/Development/TopCoder/IBP-Mobile Hybrid buildpack project/IBP-IonicEmailChall/code/src/js/app.js",
+		"/C/Development/TopCoder/IBP-Mobile Hybrid buildpack project/IBP-IonicEmailChall/code/src/components/database/config.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/webapp/partials/Start_Survey.html",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/webapp/js/lib/spin.min.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/webapp/js/script/controllers.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/webapp/js/script/services.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/services/GeographicService.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516161-engage-together-timhignid/engage-together/index.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/routes.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/bootstrap.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/app.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/controllers/EngageController.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-516154-ENGAGE-TOGETHER-SALESFORCE-3rdjiangliwu/ENGAGE-TOGETHER-SALESFORCE/backend/services/SalesforceService.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/cerner.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/index.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/epic.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/allergyintolerance.html",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/config.json",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-234397-submission-winner-liuliquan/EngageTogetherBackend/src/classes/EngageTogetherGeographics.cls",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-234397-submission-winner-liuliquan/EngageTogetherFrontend/public/js/script/controllers.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-234397-submission-winner-liuliquan/EngageTogetherFrontend/server.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/submission/submission-234397-submission-winner-liuliquan/EngageTogetherFrontend/routes/apexRest.js",
+		"/C/Development/Project Resources/HUD/HUDAPI-SWAGGER",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/medicationorder.html",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/public/js/script/services.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/public/js/script/app.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/package.json",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/views/index.ejs",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/public/js/script/controllers.js",
+		"/C/Development/TopCoder/Spring SM Sync App-30043335/base asset 30039454/app/app.js",
+		"/C/Development/TopCoder/Spring SM Sync App-30043335/base asset 30039454/app/routes/index.js",
+		"/C/Development/TopCoder/Spring SM Sync App-30043335/base asset 30039454/app/package.json",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/public/js/lib/forcetk.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/gulpfile.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/public/js/script/config.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/app.js",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/package.json",
+		"/C/Development/TopCoder/Engage Together/UI Integration Chall/engagetogether-webapp/README.md",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/diagnosticreport.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/observation.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/immunization.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/medicationstatement.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/app.constants.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/condition.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/contract.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhir-data/device.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/epic/epic-home.html",
+		"/C/Development/Sosytee-Workspace/Other Resources/Ionic-Material-master/demo/www/templates/profile.html",
+		"/C/Development/Sosytee-Workspace/Other Resources/Ionic-Material-master/demo/www/css/style.css",
+		"/C/Development/Sosytee-Workspace/Other Resources/Ionic-Material-master/demo/www/lib/ionic-material/dist/ionic.material.css",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/css/style.css",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/home.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/cerner.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/cerner-auth.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/lib/ionic-material/dist/ionic.material.css",
+		"/C/Development/Project Resources/HHS-Challenge/resources/my-ionic-material-design/www/templates/components.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/menu.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/app.js",
+		"/C/Development/Project Resources/HHS-Challenge/resources/ionic-material-design-lite-master/dist/css/ionic.material-design-lite.css",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/bower.json",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/epic.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/fhirData.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/config.xml",
+		"/C/Development/Sosytee-Workspace/sosytee-mobile-app-1/www/app/config.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/allergyintolerance.html",
+		"/C/Development/Themes/Purchased-regular Licence/codecanyon-17090015-material-design-ui-ionic-template-app/Source/Ionic UI Template - Blue Light/www/css/style.css",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/lib/angular-materialize/bower.json",
+		"/C/Development/TopCoder/Predix/Predix-HelloWorld-WebApp/manifest.yml",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/condition.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/allergyintolerance.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/device.controller.js",
+		"/C/Development/Sosytee-Workspace/sosytee-mobile-app-1/www/app/app.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/medicationstatement.html",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir-starter-master/fhir-starter-master/index.html",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir-starter-master/fhir-starter-master/fhirStarter/modules.js",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir-starter-master/fhir-starter-master/fhirStarter/controllers.js",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir-starter-master/fhir-starter-master/fhirStarter/services.js.default",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir-starter-master/fhir-starter-master/fhirStarter/directives.js",
+		"/C/Development/Sosytee-Workspace/sosytee-mobile-app/app/main/services/AuthUserDataService.js",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhirbase-ng-fhir-v0.0.2-0-gf2ed825/fhirbase-ng-fhir-f2ed825/README.md",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhirbase-ng-fhir-v0.0.2-0-gf2ed825/fhirbase-ng-fhir-f2ed825/ng-fhir.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/lib/fhir/fhir.js",
+		"/C/Development/Project Resources/HHS-Challenge/resources/fhir.js-master/dist/ngFhir.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/diagnosticreport.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/medicationorder.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/immunization.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/allergyintolerance.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/encounter.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/contract.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/observation.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/device.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/fhirData/condition.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/cerner.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/epic/epic.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/epic/index.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/cerner/index.html",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/fhirService.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/templates/home/home.controller.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/app.js",
+		"/C/Development/Project Resources/HHS-Challenge/mediFHIR/www/js/controllers.js",
+		"/C/Development/Mobile Projects/mediFHIR/www/templates/menu.html",
+		"/C/Development/Mobile Projects/mediFHIR/www/app.js",
+		"/C/Development/Mobile Projects/mediFHIR/www/templates/epic/epic.controller.js",
+		"/C/Users/snehaheda/Downloads/metadata",
+		"/C/Development/Mobile Projects/mediFHIR/www/templates/epic/main.html",
+		"/C/Development/Mobile Projects/mediFHIR/www/app.constant.js",
+		"/C/Development/Mobile Projects/mediFHIR/www/css/style.css",
+		"/C/Development/Mobile Projects/mediFHIR/www/index.html",
+		"/C/Development/TopCoder/IBP-Mobile Hybrid buildpack project/IBP-IonicEmailChall/code/gulpfile.js",
+		"/C/Development/Sosytee-Workspace/Other Resources/material-theme-test/www/css/style.css",
+		"/C/Users/snehaheda/Downloads/open-epic-api.service.js",
+		"/C/Development/Mobile Projects/mediFHIR/www/templates/epic/epic.service.js"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"pushData",
+			"AngularForce",
+			"definitions/User",
+			"app_url",
+			"console.lo",
+			"config",
+			"Epic",
+			".hero",
+			"cernerauth.service.js",
+			"input",
+			"jqFhir",
+			"patientSearch",
+			"search",
+			"auth",
+			"mkFhir",
+			"baseUrl",
+			"Provider",
+			"AllergyIntoleranceController",
+			"CERNER",
+			"fhirService.js",
+			"fhirService",
+			"OAuth",
+			"<?",
+			"Score__c",
+			"showObjectField",
+			"counter",
+			"showObjectField",
+			"addCriteria",
+			"showObjectFields",
+			" </",
+			"#",
+			"Score_Highlighter__c",
+			"Score__c",
+			"validateFilterLogic",
+			"z-index",
+			"mn-content",
+			"signin-page",
+			"signin",
+			"Will cover many web sites still in their infancy websites",
+			"ur work process",
+			"sbutton1",
+			"app.sample",
+			"fuse",
+			"mdi-action-lock-outline",
+			"twitter",
+			"//$",
+			"OAuth",
+			".tabs",
+			".item",
+			"});\n",
+			"e651000",
+			"rgba(73,155,234,1)",
+			"login"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Cerner",
+			"loginForm"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 11,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/aura/TimeTracker/TimeTracker.cmp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2152,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1316,
+								1316
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/aura/TimeTracker/TimeTrackerHelper.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1222,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1170,
+								1170
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 42.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/aura/TimeTracker/TimeTrackerController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1381,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								547,
+								547
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 84.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/aura/TaskSelectedEvent/TaskSelectedEvent.evt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								276,
+								276
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/aura/TaskListItem/TaskListItem.cmp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1703,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								345,
+								345
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/aura/TaskListItem/TaskListItemController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 519,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								310,
+								310
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/aura/TaskListItem/TaskListItemHelper.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2262,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1222,
+								1222
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/aura/RefreshTaskTimerList/RefreshTaskTimerList.evt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								114,
+								114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/aura/NewTimeEntry/NewTimeEntry.cmp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3168,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2640,
+								2640
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/aura/NewTimeEntry/NewTimeEntryController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1727,
+								1727
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 210.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/aura/NewTimeEntry/NewTimeEntryHelper.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2104,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1961,
+								1980
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 42.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/aura/LookupResult/LookupResultController.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 436,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								436,
+								436
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.MavensMate-OutputPanel":
+	{
+		"height": 94.0
+	},
+	"output.exec":
+	{
+		"height": 24.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "BlackthornDevTest.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 345.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
