@@ -4,13 +4,25 @@
 */
 public with sharing class TimeEntries extends SObjectDomain
 {
+	  /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description Initialize the parent
+	* @return none
+	*/
     public TimeEntries(List<Time_Entry__c> sObjectList)
     {
         // Domain classes are initialised with lists to enforce bulkification throughout
         super(sObjectList);
     }
     
-    
+   /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class : Method creates the Timer record for the newly inserted
+	  time entry
+	* @return none
+	*/
     public override void onAfterInsert()
     {
         /*
@@ -20,11 +32,22 @@ public with sharing class TimeEntries extends SObjectDomain
         //delegate to the time log domain
         new TimerLogs(new List<Timer_Log__c>()).createTimer(new Map<Id,Time_Entry__c>((List<Time_Entry__c>) Records).keySet());              
     } 
+   
+   
+   /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class : Method creates/updates the Timer record for the updated
+	  time entry
+	* @return none
+	*/
     
     public override void onAfterUpdate(Map<Id,SObject> existingRecords)
-    {               
+    {    
+    	//hold the record id for whic new timer record needs to be inserted           
         Set<Id> timeEntryId = new Set<Id>();
         
+        //hold the record whose timer need to be stopped
         Set<Id> timeEntryIdToStop = new Set<Id>();     
         for(Time_Entry__c entry :(List<Time_Entry__c>) Records){
             if(entry.status__c ==TimeTrackerConstants.TIMER_STARTED && ((Time_Entry__c)existingRecords.get(entry.Id)).Status__c!=entry.status__c){
@@ -34,8 +57,7 @@ public with sharing class TimeEntries extends SObjectDomain
                 timeEntryIdToStop.add(entry.Id);
             }
         }
-        system.debug(timeEntryId);
-        system.debug(timeEntryIdToStop);
+
         //delegate this action to Time Log Domain class
         SObjectUnitOfWork uow = new SObjectUnitOfWork(new Schema.SObjectType[] { Timer_Log__c.SObjectType });  
         
@@ -44,6 +66,13 @@ public with sharing class TimeEntries extends SObjectDomain
         uow.commitWork(); 
     }
     
+    /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class : This performs the action to populate the rate of task 
+	  based on bill by field on project. This value is used for amount calculation
+	* @return none
+	*/
     public override void onBeforeInsert()
     {
         Set<Id> taskAssignmentId = new Set<Id> ();

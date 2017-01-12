@@ -1,5 +1,11 @@
 public with sharing class TimeEntriesSelector extends SObjectSelector{
     
+      /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class to defined  field of this object
+	* @return List of SObject field
+	*/
     public override List<Schema.SObjectField> getSObjectFieldList()
     {
         return new List<Schema.SObjectField> {
@@ -14,23 +20,36 @@ public with sharing class TimeEntriesSelector extends SObjectSelector{
         };
     }
     
+   /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class to return the type of sobject
+	* @return Schema.SObjectType
+	*/ 
     public override Schema.SObjectType getSObjectType()
     {
         return Time_Entry__c.sObjectType;
     }
-
+	
+	/**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description this method returns all Time_Entry__c records based on the id
+ 	* @param idSet  id of the Time_Entry__c records to be fetched
+	* @return list Time_Entry__c records
+	*/
     public List<Time_Entry__c> selectById(Set<ID> idSet)
     {
         return (List<Time_Entry__c>) selectSObjectsById(idSet);
     }
     
    /**
-    * @author Sneha
-    * @date 8/01/2017
-    * @description this will return list of time entry that has been created today 
-      @param : Set : id of the user
-      @return list of records
-    */
+	* @author Sneha
+	* @date 12/1/2017
+	* @description this method returns all Time_Entry__c records for a user
+ 	* @param userIds  id of the Users for whome records are to be fetched
+	* @return list Time_Entry__c records
+	*/
     public  List<Time_Entry__c> selectCurrentDateTimerEntryByUser(Set<Id>  userIds){
         
         String query = String.format(

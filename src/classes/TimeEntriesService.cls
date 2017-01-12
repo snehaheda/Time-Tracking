@@ -1,5 +1,14 @@
 public with sharing class TimeEntriesService {
     
+    /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description method creates TimeEntry record under project for given timesheet
+ 	* @param taskAssignmentId  id of the Task & Project for which we are creating this entry
+ 	* @params timesheetId id of the timesheet record under which this record is created
+ 	* @param  userId : id of the user for whom this record is created
+	* @return none
+	*/
      public static void createTimeEntryForProjectTask(Set<Id> taskAssignmentId, String timesheetId,String userId)
     {
         // Create unit of work to capture work and commit it under one transaction
@@ -20,7 +29,15 @@ public with sharing class TimeEntriesService {
         // Commit
         uow.commitWork();                                   
     }
-     
+    
+     /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description method updated TimeEntry record with the given status
+ 	* @param timeEntryId  id of the TimeEntry for which we are updating the status
+ 	* @params status status value which will be updated
+	* @return none
+	*/ 
     public static void updateStatus(Set<Id> timeEntryId,String status){
         SObjectUnitOfWork uow = new SObjectUnitOfWork(SERVICE_SOBJECTS);
         for(Time_Entry__c entry : new TimeEntriesSelector().selectById(timeEntryId)){

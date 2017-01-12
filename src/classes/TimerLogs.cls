@@ -1,6 +1,12 @@
 public with sharing class TimerLogs extends SObjectDomain{
     
     
+	  /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description Initialize the parent
+	* @return none
+	*/
     public TimerLogs(List<Timer_Log__c> sObjectList)
     {
         // Domain classes are initialised with lists to enforce bulkification throughout
@@ -8,9 +14,13 @@ public with sharing class TimerLogs extends SObjectDomain{
     }  
     
 
-    /*
-        create the timer log records for the time entry Id
-    */
+   /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description method creates TimeEntry Timestamp record under time entry
+ 	* @param timeEntryId  id of the TimeEntry for which we are creating this entry
+	* @return Set<Id> id of the newly created records
+	*/
     public  Set<Id> createTimer(Set<ID> timeEntryId)
     {
         // Create unit of work to capture work and commit it under one transaction
@@ -28,6 +38,14 @@ public with sharing class TimerLogs extends SObjectDomain{
         return new Map<Id,Timer_Log__c>(logs).keySet();
     }
     
+    /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description method creates TimeEntry Timestamp record under time entry
+ 	* @param timeEntryId  id of the TimeEntry for which we are creating this entry
+ 	* @param uow : sobject unit of work record
+	* @return Set<Id> id of the newly created records
+	*/
     public  void createTimer(Set<ID> timeEntryId,SObjectUnitOfWork uow)
     {
                             
@@ -41,7 +59,13 @@ public with sharing class TimerLogs extends SObjectDomain{
         }       
         
     }
-    
+     /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description method updated the end datetime of the timer
+ 	* @param uow : sobject unit of work record
+	* @return none
+	*/
     public  void updateEndDate(SObjectUnitOfWork uow)
     {
                             

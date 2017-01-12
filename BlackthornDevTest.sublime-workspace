@@ -251,7 +251,7 @@
 			"file": "src/package.xml",
 			"settings":
 			{
-				"buffer_size": 758,
+				"buffer_size": 3276,
 				"line_ending": "Unix"
 			}
 		}
@@ -303,10 +303,7 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Development/Workspace/SFDC/BlackthornDevTest",
-		"/C/Development/Workspace/SFDC/BlackthornDevTest/src/aura/LookupResult",
-		"/C/Development/Workspace/SFDC/BlackthornDevTest/src/aura/TaskListItem",
-		"/C/Development/Workspace/SFDC/BlackthornDevTest/src/aura/TimeTracker"
+		"/C/Development/Workspace/SFDC/BlackthornDevTest"
 	],
 	"file_history":
 	[
@@ -537,7 +534,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 758,
+						"buffer_size": 3276,
 						"regions":
 						{
 						},

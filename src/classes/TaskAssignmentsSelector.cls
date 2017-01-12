@@ -1,5 +1,11 @@
 public with sharing class TaskAssignmentsSelector extends SObjectSelector{
     
+     /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class to defined  field of this object
+	* @return List of SObject field
+	*/
     public override List<Schema.SObjectField> getSObjectFieldList()
     {
         return new List<Schema.SObjectField> {
@@ -11,11 +17,24 @@ public with sharing class TaskAssignmentsSelector extends SObjectSelector{
         };
     }
     
+     /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description This overrides the method of base class to return the type of sobject
+	* @return Schema.SObjectType
+	*/
     public override Schema.SObjectType getSObjectType()
     {
         return Task_Assignment__c.sObjectType;
     }
 
+	/**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description this method returns all Task_Assignment__c records based on the id
+ 	* @param idSet  id of the Task_Assignment__c records to be fetched
+	* @return list Task_Assignment__c records
+	*/
     public List<Task_Assignment__c> selectById(Set<ID> idSet)
     {
         List<String> selectFields = 
@@ -38,6 +57,14 @@ public with sharing class TaskAssignmentsSelector extends SObjectSelector{
         return (List<Task_Assignment__c>) Database.query(query);    
     }
     
+    /**
+	* @author Sneha
+	* @date 12/1/2017
+	* @description this method searches task based on name for given project id
+ 	* @param idSet  id of the Project for whom records are to be fetched
+  	* @param taskKeyword  text on which task are filtered
+	* @return list Task_Assignment__c records
+	*/
     public List<Task_Assignment__c> searchByTaskProjectId(String taskKeyword,Set<ID> idSet)
     {
         List<String> selectFields = 
