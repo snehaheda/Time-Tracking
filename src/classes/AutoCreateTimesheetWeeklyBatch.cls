@@ -23,16 +23,7 @@ public with sharing class AutoCreateTimesheetWeeklyBatch implements Database.Bat
    */
    public void execute(Database.BatchableContext BC, List<Project_User_Assignment__c> scope){
     	
-    	List<Timesheet__c> timesheets = new List<Timesheet__c>();
-    	for(Project_User_Assignment__c record :scope){
-    		 Timesheet__c timeSheet = new Timesheet__c(Project__c=record.Project__c,User__c=record.User__c);
-	         timeSheet.Start_Date__c = Date.today().addDays(1).toStartOfWeek();
-	         timeSheet.End_Date__c = timeSheet.Start_Date__c.toStartOfWeek().addDays(7);
-	         timeSheet.Approval_Manager__c =  record.Project__r.OwnerId;
-	         timesheets.add(timeSheet);
-    	}
-    	
-    	insert timesheets;   	
+    	TimesheetsService.createThisWeekTimesheet(new Map<Id,Project_User_Assignment__c>(scope).keySet()); 	
    }
 
    public void finish(Database.BatchableContext BC){

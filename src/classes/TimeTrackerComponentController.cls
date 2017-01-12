@@ -13,14 +13,20 @@ public with sharing class TimeTrackerComponentController{
     
     @AuraEnabled
     public static List<Task_Assignment__c> getTaskForProject(String searchKeyWord) {
-        String searchKey = searchKeyWord + '%';
-        List<Task_Assignment__c> availableTasks = 
-                [SELECT Id, Task__c, Project__c, Task__r.description__c,Task__r.Name  FROM Task_Assignment__c WHERE  Task__r.Name LIKE: searchKey AND Project__c IN (Select Project__c FROM Project_User_Assignment__c WHERE User__c =:UserInfo.getUserId())];
-		system.debug(availableTasks);
-        return availableTasks;
+       
+        //first get all the project assignment that the logged in user belongs
+        List<Project_User_Assignment__c> userProjects = 
+        new ProjectAssignmentsSelector().projectsAssignedToUser(new Set<Id>{ UserInfo.getUserId() });
+        
+        Set<Id> projectIds = new Set<Id>();
+        for(Project_User_Assignment__c assignment : userProjects)
+        	projectIds.add(assignment.Project__c);
+        
+        TaskAssignmentsSelector selector = new TaskAssignmentsSelector();
+        return selector.searchByTaskProjectId(searchKeyWord,projectIds);
     }
     
-   
+    
     
     /**
     * @author Sneha
@@ -29,9 +35,7 @@ public with sharing class TimeTrackerComponentController{
     */
     @AuraEnabled
     public static List<Time_Entry__c> getTodayTimerEntry() {
-        List<Time_Entry__c> currentTimeEntry = 
-             [SELECT Id, Task__c,Project__c, Timer_Started_At__c,Status__c FROM Time_Entry__c WHERE Date__c = TODAY AND  User__c =:UserInfo.getUserId()];
-        return currentTimeEntry;
+        return new TimeEntriesSelector().selectCurrentDateTimerEntryByUser( new Set<Id>{ UserInfo.getUserId() } ); 
     }
     
     /**
@@ -43,24 +47,20 @@ public with sharing class TimeTrackerComponentController{
     public static void startTimer(Task_Assignment__c selectedTask) {
      	 
      	 //first fetch the time sheet record for this week if not found create one:-
-     	 List<Timesheet__c> thisWeekTimesheetList = [Select Id FROM Timesheet__c WHERE Start_Date__c = THIS_WEEK AND User__c=:UserInfo.getUserId()];
-     	 Timesheet__c thisWeekTimesheet;
+     	 List<Timesheet__c> thisWeekTimesheetList = new TimesheetsSelector().getCurrentWeekTimesheetForUser(new Set<Id>{UserInfo.getUserId()});
+     	 
+     	 String timesheetId; 
      	 if(thisWeekTimesheetList.size()==0){
      	 	//create one for this week
-     	 	thisWeekTimesheet=createTimesheet(selectedTask.project__c);	
-     	 }else{
-     	 	thisWeekTimesheet = thisWeekTimesheetList[0];
+     	 	Map<Id,Project_User_Assignment__c> projAssignmentId=new Map<Id,Project_User_Assignment__c>(
+     	 		new ProjectAssignmentsSelector().selectAssignmentByProjectByUser(new Set<Id>{selectedTask.project__c},new Set<Id>{UserInfo.getUserId()})
+     	 	);
+     	 	thisWeekTimesheetList =  TimesheetsService.createThisWeekTimesheet(projAssignmentId.keySet());     	 		
      	 }
-     	      	 
-     	 Time_Entry__c newEntry = new Time_Entry__c();
-     	 newEntry.Task_Assignment__c =selectedTask.Id;
-     	 newEntry.Date__c = Date.today();
-     	 newEntry.Timer_Started_At__c = DateTime.Now();
-     	 newEntry.timesheet__c = thisWeekTimesheet.Id;
-     	 newEntry.Status__c = 'Started';
-     	 newEntry.User__c=UserInfo.getUserId();
-     	 insert newEntry;
-    }
+     	   
+     	 TimeEntriesService.createTimeEntryForProjectTask(new Set<Id>{selectedTask.Id},thisWeekTimesheetList[0].Id,UserInfo.getUserId());     	 
+     	
+    } 
     
     /**
     * @author Sneha
@@ -69,11 +69,8 @@ public with sharing class TimeTrackerComponentController{
     */
     @AuraEnabled
     public static void stopTimerRecord(Time_Entry__c timeEntry) {
-     	
-     	timeEntry.status__c='Stopped';
-     	update  timeEntry;
-     	 
-    }
+     	TimeEntriesService.updateStatus(new Set<Id>{timeEntry.Id},TimeTrackerConstants.TIMER_STOPPED);
+    } 
     
      /**
     * @author Sneha
@@ -82,31 +79,10 @@ public with sharing class TimeTrackerComponentController{
     */
     @AuraEnabled
     public static void resumeTimerRecord(Time_Entry__c timeEntry) {
-     	
-     	timeEntry.status__c='Started';
-     	update  timeEntry;
+     	TimeEntriesService.updateStatus(new Set<Id>{timeEntry.Id},TimeTrackerConstants.TIMER_STARTED);
      	 
     }
     
    
-    /**
-    * @author Sneha
-    * @date 9/01/2017
-    * @description : helper method that will create a timesheet if not found
-    * @params : id of the project for which we are creating the timesheet
-    */
-     public static Timesheet__c createTimesheet(String projectId) {
-     	 
-     	 List<Project_User_Assignment__c> manager = [Select User__c FROM Project_User_Assignment__c WHERE Project__c=:projectId AND Is_Project_Manager__c=true];
-     	 
-     	 Timesheet__c timeSheet = new Timesheet__c(Project__c=projectId,User__c=UserInfo.getUserId());
-     	 timeSheet.Start_Date__c = Date.today().toStartOfWeek();
-     	 timeSheet.End_Date__c = Date.today().toStartOfWeek().addDays(7);
-     	 if(manager.size()>0)
-     	 	timeSheet.Approval_Manager__c =  manager[0].User__c;
-     	 	
-     	 insert timeSheet;
-     	 return timeSheet;
-     }
     
 }

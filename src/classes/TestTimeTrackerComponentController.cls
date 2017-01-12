@@ -60,7 +60,7 @@ private class TestTimeTrackerComponentController {
         	TimeTrackerComponentController.resumeTimerRecord(entries[0]);
         	t = [Select Id,Status__c FROM Time_Entry__c WHERE Id=:entries[0].Id];
         	system.assert(t.Status__c=='Started');
-        Test.stopTest();
+        Test.stopTest(); 
         
     }
     

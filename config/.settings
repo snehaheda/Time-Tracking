@@ -12,10 +12,12 @@
         "ApexComponent",
         "ApexPage",
         "ApexTrigger",
+        "AppMenu",
         "ApprovalProcess",
         "AuraDefinitionBundle",
         "CustomApplication",
         "CustomObject",
+        "CustomTab",
         "Profile",
         "StaticResource"
     ]
